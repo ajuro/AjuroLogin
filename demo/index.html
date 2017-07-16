@@ -1,0 +1,109 @@
+﻿<style>
+	body{ background-color:#efe; }
+	.note { width: 500px; border: 1px red solid; background: #DEE; text-align: left; padding: 20px }
+	.note a{color: #00B; text-decoration:none}
+	.ajuro.logo{ width: 100px; height: 100px; }
+</style>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="login.js"></script>
+<div id='login_placeholder'></div>
+<script>
+  // Use this line in your PHP file to initiate the form with the session info
+  // RegistredUser.username = "<?php echo($_SESSION['registred_user_id']); ?>";
+</script>
+
+<center>
+  <h1>Login Documentation</h1>
+<div class="ajuro note">AjuroProductCard<br>Developed by <a href="http://www.linkedin.com/in/florincumpanasu" target="_blank">Cumpanasu Florin</a> for <a href="http://aju.ro" target="_blank">aju.ro</a> resoueces <br>(the romanian open market <a href="http://aju.ro/api" target="_blank">API</a>). </div>
+
+
+
+Usage
+<div class="ajuro note">
+	Add to your page the following lines as required:
+  <pre>
+&lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"&gt;&lt;/script&gt;
+&lt;script src="login.js"&gt;&lt;/script&gt;
+&lt;div id='login_placeholder'&gt;&lt;/div&gt;
+  </pre>
+</div>
+
+Login Request
+<div class="ajuro note">
+  <pre>
+  {
+      "user_action":"user_action_login",
+      "email":"office@aju.ro",
+      "password":"hashed_password"
+  }
+  </pre>
+</div>
+Logout Request JSON
+<div class="ajuro note">
+  <pre>
+  {
+      user_action: "user_action_logout"
+  }
+  </pre>
+</div>
+Password Recovery Request
+<div class="ajuro note">
+  <pre>
+  {
+      "user_action":"user_action_recover_password",
+      "email":"office@aju.ro",
+  }
+  </pre>
+</div>
+New User Registration Request
+<div class="ajuro note">
+  <pre>
+  {
+      "user_action":"user_action_register",
+      "email":"office@aju.ro",
+      "password":"hashed_password"
+  }
+  </pre>
+</div>  
+<br>
+<br>
+
+<div class="ajuro note">
+  In server response contain the request options, the sql query, the array of results and the status.<br>
+  In case of an unsuccessful login, "result": null and "status"."success" = false, "status"."code" = "stay" and "status"."message" = "Wrong username or password!"
+  In case of a successful login, one record will be returned as result. The status will be: "success": true <br>
+  The code retourned by the endpoint will guide the client to deiplay the appropiate mask.
+</div>
+  
+Login Response Example
+<div class="ajuro note">
+  <pre>
+  {
+      "request": {
+          "type": "user",
+          "whereCondition": " WHERE `password` = 'hashed_password' ",
+          "skip": 0,
+          "distinct": null,
+          "take": 100
+      },
+      "sql": {
+          "query": "SELECT * FROM user  WHERE `password` = 'hashed_password' ORDER BY `timestamp` DESC LIMIT 100  OFFSET 0"
+      },
+      "result": [
+          {
+              "id": 22,
+              "username": "start"
+          }
+      ],
+      "status": {
+          "success": true,
+          "code": "logout",
+          "message": "Welcome start"
+      }
+  }
+  </pre>
+</div>
+<br>
+<br>
+</center>
