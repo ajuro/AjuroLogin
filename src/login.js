@@ -3,14 +3,14 @@
 	var row = $('<tr></tr>');
 	var def = $('<td></td>').attr('colspan', 2).css('text-align', 'right');
 	var submitButton = $('<input></input>').attr('type', 'submit').attr('value', text);
-	var submitHolder = $('<div style="width: 100%; text-align:right"><div>').on('click', SubmitLoginForm);
-	submitHolder.append(submitButton).append($('<div id="login_error_placeholder"></div>').css('text-align', 'left').css('color', 'red'));
-	def.append(submitHolder);
-	def.append($('<hr>'));
+	var submitHolder = $('<span style="width: 100%; text-align:right"><span>').on('click', SubmitLoginForm);
+	submitHolder.append(submitButton).append($('<span id="login_error_placeholder"></span>').css('text-align', 'left').css('color', 'red'));
 	for(i=0; i<options.length; i++)
 	{
-		def.append($('<a style="margin:3px">['+options[i].text+']</a>').css('color', 'blue').css('text-decoration', 'underline').on('click', options[i].onclick));
+		def.append($('<a style="font-size:small; margin:3px; text-align:left">['+options[i].text+'] </a>').css('color', '#008').css('cursor', 'hand').css('text-decoration', 'none').css('border', '0px solid silver').css('padding', '1px 1px 1px 1px').on('click', options[i].onclick));
 	}
+	def.append(submitHolder);
+	def.append($('<hr>'));
 	row.append(def);
 	return row;
 }
@@ -79,7 +79,7 @@ function GenerateOptions(text, options)
 	var submitButton = $('<input></input>').attr('type', 'submit').attr('value', text);//.css({'background-color', 'green'});
 	var submitHolder = $('<div style="width: 100%; text-align:right"><div>');
 	submitHolder.append(submitButton).append($('<div id="login_error_placeholder"></div>'));
-	def.append($('<div>'+text+'</div>').css('color', 'gray'));
+	//def.append($('<div>'+text+'</div>').css('color', 'gray'));
 	row.append(def);
 	def.append($('<hr>'));
 	return row;
@@ -95,7 +95,7 @@ function GenerateInputTextElement(label, fieldName)
 {
 	var row = $('<tr></tr>');
 	var label = $('<td>'+label+'</td>');
-	var input = $('<td></td>').append($('<input></input>').attr('type', 'text').attr('name', fieldName));
+	var input = $('<td></td>').append($('<input style="width: 100%"></input>').attr('type', 'text').attr('name', fieldName));
 	row.append(label);
 	row.append(input);
 	return row;
@@ -105,7 +105,7 @@ function GenerateInputPasswordElement(label, fieldName)
 {
 	var row = $('<tr></tr>');
 	var label = $('<td>'+label+'</td>');
-	var input = $('<td></td>').append($('<input></input>').attr('type', 'password').attr('name', fieldName));
+	var input = $('<td></td>').append($('<input style="width: 100%"></input>').attr('type', 'password').attr('name', fieldName));
 	row.append(label);
 	row.append(input);
 	return row;
@@ -113,7 +113,7 @@ function GenerateInputPasswordElement(label, fieldName)
 
 var RenderViewLogin = function ()
 {
-	var form = $('<table></table>');
+	var form = $('<table style="width: 300px; float:right"></table>');
 	form.append(GenerateOptions('Login!', [{"text":'Am uitat parola!', "onclick":RenderViewRecover }, {"text":'Înregistrare', "onclick":RenderViewRegister}]));
 	form.append(GenerateInputTextElement('Email', 'email'));
 	form.append(GenerateInputPasswordElement('Parola', 'password'));
@@ -121,13 +121,14 @@ var RenderViewLogin = function ()
 	$("#login_placeholder")
 		.empty()
 		.append(GenerateInputHiddenElement('user_action', 'user_action_login'))
+		.css('width', '100%')
 		.append(form);
 	return form; 
 }
 
 function RenderViewLogout()
 {
-	var form = $('<table></table>');
+	var form = $('<table  style="width: 300px; float:right"></table>');
 	form.append(GenerateOptions('Logout', [{"text":'Logout', "onclick":RenderViewLogin }]));
 	form.append(GenerateSubmit('Logout', [{"text":'Logout', "onclick":RenderViewLogin }]));
 	$("#login_placeholder")
@@ -138,7 +139,7 @@ function RenderViewLogout()
 }
 var RenderViewRegister = function ()
 {
-	var form = $('<table></table>');
+	var form = $('<table  style="width: 300px; float:right"></table>');
 	form.append(GenerateOptions('Înregistrare!', [{"text":'Login', "onclick":RenderViewLogin}]));
 	form.append(GenerateInputTextElement('Email', 'email'));
 	form.append(GenerateInputPasswordElement('Parola', 'password'));
@@ -152,7 +153,7 @@ var RenderViewRegister = function ()
 }
 var RenderViewRecover = function ()
 {
-	var form = $('<table></table>');
+	var form = $('<table  style="width: 300px; float:right"></table>');
 	form.append(GenerateOptions('Send!', [{"text":'Login', "onclick":RenderViewLogin}, {"text":'Înregistrare', "onclick":RenderViewRegister}]));
 	form.append(GenerateInputTextElement('Email', 'email'));
 	form.append(GenerateSubmit('Send!', [{"text":'Login', "onclick":RenderViewLogin}, {"text":'Înregistrare', "onclick":RenderViewRegister}]));
